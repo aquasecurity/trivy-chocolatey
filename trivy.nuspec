@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <!-- Read this before publishing packages to chocolatey.org: https://github.com/chocolatey/chocolatey/wiki/CreatePackages -->
+    <id>trivy</id>
+    <title>Trivy</title>
+    <version>0.66.0</version>
+    <authors>Teppei Fukuda</authors>
+    <owners>Aqua Security</owners>
+    <summary>Find vulnerabilities, misconfigurations, secrets, SBOM in containers, Kubernetes, code repositories, clouds and more</summary>
+    <description>
+# Trivy
+## Description
+
+A Simple and Comprehensive Vulnerability Scanner for Containers, Suitable for CI - [https://github.com/aquasecurity/trivy](https://github.com/aquasecurity/trivy)
+
+## Features
+
+* Install and uninstall via Chocolatey
+* Supports only 64bit version
+
+## Usage
+
+### Package Parameters
+
+* /DownloadDatabaseOnly = (Yes/No) - If set to "Yes", after instalation Trivy will update DB only
+
+  If not set, then "No" is default answer
+
+### Direct
+
+```
+choco install trivy -y
+```
+
+or with DB update during instalation
+
+```
+choco install trivy -y --params "//DownloadDatabaseOnly=Yes"
+```
+
+### YAML (Foreman, puppetlabs/chocolatey module)
+
+```
+trivy:
+  ensure: latest
+  provider: chocolatey
+```
+
+or
+
+```
+trivy:
+  ensure: latest
+```
+    </description>
+    <projectUrl>https://github.com/aquasecurity/trivy</projectUrl>
+    <packageSourceUrl>https://github.com/aquasecurity/trivy-chocolatey</packageSourceUrl>
+    <docsUrl>https://github.com/aquasecurity/trivy</docsUrl>
+    <iconUrl>https://raw.githubusercontent.com/aquasecurity/trivy-vscode-extension/refs/heads/master/images/icon.png</iconUrl>
+    <bugTrackerUrl>https://github.com/aquasecurity/trivy/issues</bugTrackerUrl>
+    <tags>trivy ci scan security docker image admin</tags>
+    <copyright>Aqua Security</copyright>
+    <licenseUrl>https://raw.githubusercontent.com/aquasecurity/trivy/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>https://github.com/aquasecurity/trivy/releases</releaseNotes>
+  </metadata>
+    <files>
+      <file src="tools\**" target="tools" />
+    </files>
+</package>
