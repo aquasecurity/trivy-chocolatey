@@ -27,10 +27,12 @@ permissions:
 jobs:
   # run the update script on ubuntu and push the changes to main branch
   update:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-2404-2core
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.TRIVY_CHOCOLATEY_DEPLOY_TOKEN }}
 
       - name: Set up Git
         run: |
@@ -44,15 +46,16 @@ jobs:
           incoming_version="${{ github.event.inputs.version }}"
           echo "version=${incoming_version#v}" >> $GITHUB_OUTPUT
 
-      - name: Run update script
-        run: |
-          ./scripts/update.sh "${{ steps.set_version.outputs.version }}"
+#      - name: Run update script
+#        run: |
+#          ./scripts/update.sh "${{ steps.set_version.outputs.version }}"
 
       - name: Commit and push changes
         run: |
-          git add trivy.nuspec tools/chocolateyinstall.ps1
-          git commit -m "Update package to latest version" || echo "No changes to commit"
-          git push origin HEAD:${{ github.ref_name }}
+              echo "git push..."
+#          git add trivy.nuspec tools/chocolateyinstall.ps1
+#          git commit -m "Update package to latest version" || echo "No changes to commit"
+#          git push origin HEAD:${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -64,13 +67,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: main   
+          token: ${{ secrets.TRIVY_CHOCOLATEY_DEPLOY_TOKEN }}
+          ref: main
 
-      - name: pack the project
-        run: |
-          choco apikey -k ${env:CHOCO_API_KEY} -s https://push.chocolatey.org/
-          choco pack
-          choco push -s https://push.chocolatey.org/
-        env:
-          CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
+#      - name: pack the project
+#        run: |
+#          choco apikey -k ${env:CHOCO_API_KEY} -s https://push.chocolatey.org/
+#          choco pack
+#          choco push -s https://push.chocolatey.org/
+#        env:
+#          CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
 
