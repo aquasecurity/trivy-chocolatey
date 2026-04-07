@@ -18,6 +18,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
+          token: ${{ secrets.TRIVY_CHOCOLATEY_DEPLOY_TOKEN }}
           persist-credentials: false
 
       - name: Set up Git
@@ -59,6 +60,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
+          token: ${{ secrets.TRIVY_CHOCOLATEY_DEPLOY_TOKEN }}
           ref: main
           persist-credentials: false
 
