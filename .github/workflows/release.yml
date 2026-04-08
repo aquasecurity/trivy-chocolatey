@@ -8,7 +8,8 @@ on:
         required: false
         default: ''
 
-permissions: {}
+permissions:
+  contents: read
 
 jobs:
   # run the update script on ubuntu and push the changes to main branch
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-2404-2core
     steps:
       - name: Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
 
@@ -47,7 +48,7 @@ jobs:
         run: |
           git add trivy.nuspec tools/chocolateyinstall.ps1
           git commit -m "Update package to latest version" || echo "No changes to commit"
-          git push "https://x-access-token:${TRIVY_CHOCOLATEY_DEPLOY_TOKEN}@github.com/${{ github.repository }}.git" "HEAD:${GIT_REF_NAME}"
+          git push "https://x-access-token:${TRIVY_CHOCOLATEY_DEPLOY_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${GIT_REF_NAME}"
 
     # on windows latest, build and push the package to chocolatey.org and myget.org
   build-and-push:
@@ -55,9 +56,8 @@ jobs:
     needs: update
     steps:
       - name: Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          token: ${{ secrets.TRIVY_CHOCOLATEY_DEPLOY_TOKEN }}
           ref: main
           persist-credentials: false
 
